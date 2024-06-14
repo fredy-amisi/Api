@@ -17,22 +17,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 include 'DbConnect.php';
-$objDb = new DbConnect;
-$conn = $objDb->connect();
+
+
+$dbConnect = new DbConnect();
+$conn = $dbConnect->conn;
 
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method){
     case "POST":
         $user = json_decode(file_get_contents('php://input'));
-        $sql = "INSERT INTO booking(id, PickupLocation, DeliveryLocation, DateforPickup, PaymentInformation, TypeofGoods, Quantity)
-         VALUES (null, :PickupLocation, :DeliveryLocation, :DateforPickup, :PaymentInformation, :TypeofGoods, :Quantity)";
+        $sql = "INSERT INTO booking(id, name, email, datein, alonepartner, dateout, PaymentInformation)
+         VALUES (null, :name, :email, :date-in, :alone-partner, :date-out, :PaymentInformation)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':PickupLocation', $user->PickupLocation);
-        $stmt->bindParam(':DeliveryLocation', $user->DeliveryLocation);
-        $stmt->bindParam(':DateforPickup', $user->DateforPickup);
+        $stmt->bindParam(':name', $user->name);
+        $stmt->bindParam(':email', $user->email);
+        $stmt->bindParam(':date-in', $user->datein);
+        $stmt->bindParam(':alone-partner', $user->alonepartner);
+        $stmt->bindParam(':date-out', $user->dateout);
         $stmt->bindParam(':PaymentInformation', $user->PaymentInformation);
-        $stmt->bindParam(':TypeofGoods', $user->TypeofGoods);
-        $stmt->bindParam(':Quantity', $user->Quantity);
 
        if($stmt->execute()){
             $response = ['status' => 1, 'message' => 'Booking Was successful.'];
