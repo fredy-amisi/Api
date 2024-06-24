@@ -24,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $data['username'];
         $password = $data['password'];
 
-        // Query to check if the user exists
-        $stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+        // Query to check if the user exists and fetch role
+        $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE username = :username");
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        $user = $stmt->fetch();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user) {
             // Retrieve hashed password from the database
@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify password
             if (password_verify($password, $storedHashedPassword)) {
                 // Password is correct, login successful
-                $response = array("success" => true);
+                $role = $user['role'];
+                $response = array("success" => true, "role" => $role);
                 echo json_encode($response);
             } else {
                 // Password is incorrect, send error response

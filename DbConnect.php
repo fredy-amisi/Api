@@ -9,7 +9,7 @@ class DbConnect
     private $dbname = 'E-Attendance';
     private $user = 'root';
     private $pass = '';
-    public $conn; // <-- Define $conn as a property of the class
+    public $conn; 
 
     public function __construct()
     {

@@ -13,7 +13,7 @@ $conn = $dbConnect->conn;
 $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
     case "GET":
-        $sql = "SELECT id, name, email, username, role, phonenumber FROM users";
+        $sql = "SELECT id, name, email, username, role, phonenumber, signin_date FROM users";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
