@@ -17,18 +17,16 @@ $conn = $dbConnect->conn;
 
 // Check if the request method is GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Query to get details from enrollments table with course name
-    $stmt = $conn->prepare("SELECT enrollments.id, enrollments.student_name, enrollments.email, enrollments.enrollment_date, courses.course_name 
-                            FROM enrollments 
-                            JOIN courses ON enrollments.course_id = courses.id");
+    // Query to get details from booking table
+    $stmt = $conn->prepare("SELECT id, fullName, email, service, appointmentDate, appointmentTime, paymentMethod FROM booking");
     $stmt->execute();
-    $enrollments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($enrollments) {
-        // Send successful response with enrollments data
-        echo json_encode($enrollments);
+    if ($appointments) {
+        // Send successful response with appointments data
+        echo json_encode($appointments);
     } else {
-        // No enrollments found, send empty array
+        // No appointments found, send empty array
         echo json_encode([]);
     }
 } else {

@@ -10,7 +10,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "E-Attendance";
+$dbname = "BMS";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -6,7 +6,7 @@
 class DbConnect
 {
     private $server = 'localhost';
-    private $dbname = 'E-Attendance';
+    private $dbname = 'BMS';
     private $user = 'root';
     private $pass = '';
     public $conn; 
@@ -21,7 +21,6 @@ class DbConnect
         }
     }
 
-    // You can add additional methods here if needed
 }
 
 ?>

@@ -26,18 +26,18 @@ $method = $_SERVER['REQUEST_METHOD'];
 switch($method){
     case "POST":
         $user = json_decode(file_get_contents('php://input'));
-        $sql = "INSERT INTO booking(id, name, email, datein, alonepartner, dateout, PaymentInformation)
-         VALUES (null, :name, :email, :date-in, :alone-partner, :date-out, :PaymentInformation)";
+        $sql = "INSERT INTO booking(id, fullName, email, appointmentDate, service, paymentMethod, appointmentTime)
+         VALUES (null, :fullName, :email, :appointmentDate, :service, :paymentMethod, :appointmentTime)";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':name', $user->name);
+        $stmt->bindParam(':fullName', $user->fullName);
         $stmt->bindParam(':email', $user->email);
-        $stmt->bindParam(':date-in', $user->datein);
-        $stmt->bindParam(':alone-partner', $user->alonepartner);
-        $stmt->bindParam(':date-out', $user->dateout);
-        $stmt->bindParam(':PaymentInformation', $user->PaymentInformation);
+        $stmt->bindParam(':appointmentDate', $user->appointmentDate);
+        $stmt->bindParam(':service', $user->service);
+        $stmt->bindParam(':paymentMethod', $user->paymentMethod);
+        $stmt->bindParam(':appointmentTime', $user->appointmentTime);
 
        if($stmt->execute()){
-            $response = ['status' => 1, 'message' => 'Booking Was successful.'];
+            $response = ['status' => 1, 'message' => 'Appointment Booked successful!'];
             echo json_encode($response);
         }
         else{
